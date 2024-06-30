@@ -36,7 +36,7 @@ const createSendToekn = (user, statusCode, res, next) => {
   }
 };
 //Send OTP for email verification
-const otp = async (email) => {
+const otp = async (email, next) => {
   try {
     //Will send 8 digit email verification code
     const min = 10000000;
@@ -58,7 +58,7 @@ const otp = async (email) => {
 exports.signUp = async (req, res, next) => {
   try {
     let { email } = req.body;
-    let code = otp(email);
+    let code = otp(email, next);
     const newUser = await User.create(req.body);
     newUser.emailVerificationOTP = await code;
     await newUser.save();

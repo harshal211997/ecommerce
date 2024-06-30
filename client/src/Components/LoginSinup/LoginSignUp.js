@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginSignUp.css";
 import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 
 const LoginSignUp = () => {
+  const Navigate = useNavigate();
   const [action, setAction] = useState("Sign Up");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function signUp() {
-    //console.log(name, email, password);
     let item = { name, email, password };
     let result = await fetch("http://localhost:8000/api/v1/users/signUp", {
       method: "POST",
@@ -21,6 +22,8 @@ const LoginSignUp = () => {
       },
       body: JSON.stringify(item),
     });
+    console.log(result);
+    return Navigate("/verifyEmail", { state: { email: email } });
   }
   async function login() {
     let item = { email, password };
