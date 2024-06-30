@@ -151,7 +151,7 @@ exports.verifyEmail = async (req, res, next) => {
       return next(new AppError("Invalid email ID", 400));
     }
     let userOtp = user["emailVerificationOTP"];
-    if (otp !== userOtp) {
+    if (otp * 1 !== userOtp) {
       return next(new AppError("Wrong OTP, Please check OPT again!", 400));
     }
     user["emailVerificationOTP"] = undefined;
